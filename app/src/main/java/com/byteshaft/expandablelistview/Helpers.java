@@ -8,22 +8,6 @@ import java.util.ArrayList;
 
 public class Helpers {
 
-    protected static ArrayList<ArrayList<JSONObject>> getChildrenForObjects(ArrayList<JSONObject> arrayList)  {
-        ArrayList<ArrayList<JSONObject>> result = new ArrayList<>();
-        for (JSONObject object : arrayList) {
-            ArrayList<JSONObject> list = new ArrayList<>();
-            JSONArray childSections = object.optJSONArray("childSections");
-            JSONArray items = object.optJSONArray("items");
-            if (childSections != null && childSections.length() > 0) {
-                addDataToArrayList(list, childSections);
-            } else if (items != null && items.length() > 0) {
-                addDataToArrayList(list, items);
-            }
-            result.add(list);
-        }
-        return result;
-    }
-
     protected static ArrayList<JSONObject> getChildren(JSONObject parentObject) {
         ArrayList<JSONObject> result = new ArrayList<>();
         JSONArray childSections = parentObject.optJSONArray("childSections");

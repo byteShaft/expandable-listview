@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RootAdapter adapter = new RootAdapter(getApplicationContext(), mTopLevelItems);
+        MultiLevelExpandableListAdapter adapter = new MultiLevelExpandableListAdapter(getApplicationContext(), mTopLevelItems);
         mExpandableListView.setAdapter(adapter);
     }
 
