@@ -34,8 +34,7 @@ public class RootAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return 0;
-//        return Helpers.getChildren(mRootItemsList.get(i)).size();
+        return mChildItemsList.size();
     }
 
     @Override
@@ -86,6 +85,30 @@ public class RootAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.list_group, null);
+            holder = new ViewHolder();
+            holder.textView = (TextView) view.findViewById(R.id.lblListHeader);
+            holder.textView.setTypeface(null, Typeface.BOLD);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+        JSONObject item = (JSONObject) getChild(i, i1);
+        String headerTitle = getNameForItem((JSONObject) getChild(i, i1));
+        holder.textView.setText(headerTitle);
+        boolean expandable = item.optBoolean("populateExpandableList", false);
+        if (!expandable) {
+            return view;
+        } else {
+            System.out.println(item);
+            holder.textView.setText(null);
+            return null;
+        }
+
 //        JSONObject child = (JSONObject) getChild(i, i1);
 //        boolean isExpandable = child.optBoolean("populateExpandableList", false);
 //        if (isExpandable) {
@@ -96,7 +119,6 @@ public class RootAdapter extends BaseExpandableListAdapter {
 //        level.setLayoutParams(new ListView.LayoutParams(
 //                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 //        level.setAdapter(new RootAdapter(mContext, mChildItemsList.get(i)));
-        return view;
 //        JSONObject group = mRootItemsList.get(i);
 //        if (isGroupExpandable(group)) {
 //            MainActivity.mExpandableListView.invalidate();
